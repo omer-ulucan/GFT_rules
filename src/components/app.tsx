@@ -3,6 +3,8 @@ import MatchRules from "./matchrules";
 import Navbar from "./navbar";
 import Rules from "./rules";
 import { useState } from "react";
+import gaziLogo from '../assets/gazi_logo.png';
+import gftLogo from '../assets/gft_logo.png';
 
 function App() {
   const rules = [
@@ -37,21 +39,34 @@ function App() {
   ];
 
   const [currentContent, setCurrentContent] = useState(<Rules rules={rules} />);
+  const [activeSection, setActiveSection] = useState('info');
 
   return (
-    <div className="justify-center bg-gray-900 transition-all duration-500 h-[100%]">
+    <div className="items-center bg-gray-900 transition-all duration-500 min-h-screen">
       <Navbar
         info="Genel Bilgiler"
         rules="Disiplin Kuralları"
         inMatch="Maç İçi Kurallar"
-        onInfoClick={() => setCurrentContent(<Rules rules={rules} />)}
-        onRulesClick={() => setCurrentContent(<Discipline rules={discipline1} />)}
-        onInMatchClick={() => setCurrentContent(<MatchRules rules={discipline2}/>)}
+        onInfoClick={() => {
+          setCurrentContent(<Rules rules={rules} />);
+          setActiveSection('info');
+        }}
+        onRulesClick={() => {
+          setCurrentContent(<Discipline rules={discipline1} />);
+          setActiveSection('rules');
+        }}
+        onInMatchClick={() => {
+          setCurrentContent(<MatchRules rules={discipline2} />);
+          setActiveSection('inMatch');
+        }}
+        leftImageSrc={gaziLogo}
+        rightImageSrc={gftLogo}
+        activeSection={activeSection}
       />
 
       <section
         id="content"
-        className="flex items-center justify-center text-white"
+        className="flex flex-col items-center justify-center text-white"
       >
         {currentContent}
       </section>
